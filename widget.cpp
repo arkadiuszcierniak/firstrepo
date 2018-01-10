@@ -1,12 +1,15 @@
 #include "widget.h"
 #include "ui_widget.h"
+#include <QFile>
+#include <QTextStream>
 
-Widget::Widget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Widget)
+Widget::Widget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    loadTextFile();
 }
+
 
 Widget::~Widget()
 {
@@ -15,10 +18,12 @@ Widget::~Widget()
 
 void Widget::on_findButton_clicked()
 {
+    QString searchString = ui->lineEdit->text();
+    ui->textEdit->find(searchString, QTextDocument::FindWholeWords);
 
 }
 
-void TextFinder::loadTextFile()
+void Widget::loadTextFile()
 {
     QFile inputFile(":/input.txt");
     inputFile.open(QIODevice::ReadOnly);
